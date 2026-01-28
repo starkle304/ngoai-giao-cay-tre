@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ngoại giao Cây tre Việt Nam - HCM202</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #1E1E1E;
+            background: #F3ECDC;
+        }
+
+        nav {
+            background: rgba(58, 79, 60, 0.95);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            color: #F3ECDC;
+        }
+
+        .logo h1 {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .logo p {
+            font-size: 0.85em;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 15px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-menu button {
+            background: transparent;
+            border: 2px solid #C9A44C;
+            color: #F3ECDC;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu button:hover,
+        .nav-menu button.active {
+            background: #C9A44C;
+            color: #1E1E1E;
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #3A4F3C 0%, #5a7258 100%);
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            padding: 80px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23C9A44C" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h2 {
+            font-size: 3em;
+            color: #F3ECDC;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            font-size: 1.2em;
+            color: #F3ECDC;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .hero-btn {
+            background: #C9A44C;
+            color: #1E1E1E;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(201, 164, 76, 0.3);
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(201, 164, 76, 0.4);
+        }
+
+        .hero-image {
+            background: rgba(243, 236, 220, 0.1);
+            border: 3px solid #C9A44C;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .content-wrapper {
+            max-width: 1400px;
+            margin: 60px auto;
+            padding: 0 40px;
+        }
+
+        .section-title {
+            background: #8B5E3C;
+            color: #F3ECDC;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            text-align: center;
+            border: 3px solid #C9A44C;
+        }
+
+        .section-title h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .content-grid {
+            display: grid;
+            gap: 30px;
+        }
+
+        .content-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            border: 2px solid #C9A44C;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .content-card h3 {
+            color: #3A4F3C;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #C9A44C;
+        }
+
+        .content-card h4 {
+            color: #8B5E3C;
+            font-size: 1.3em;
+            margin: 25px 0 15px 0;
+        }
+
+        .content-card p {
+            margin-bottom: 15px;
+            text-align: justify;
+            line-height: 1.8;
+        }
+
+        .content-card ul, .content-card ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        .content-card li {
+            margin-bottom: 10px;
+            line-height: 1.7;
+        }
+
+        blockquote {
+            background: #F3ECDC;
+            border-left: 5px solid #C9A44C;
+            padding: 20px;
+            margin: 25px 0;
+            font-style: italic;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight {
+            background: #C9A44C;
+            color: #1E1E1E;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .video-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            border: 2px solid #C9A44C;
+            margin-bottom: 30px;
+        }
+
+        .video-section h2 {
+            color: #8B5E3C;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        video {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        footer {
+            background: #3A4F3C;
+            color: #F3ECDC;
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 968px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content h2 {
+                font-size: 2em;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nav-menu {
+                justify-content: center;
+            }
+
+            .nav-menu button {
+                padding: 8px 15px;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <h1>Ngoại giao Cây tre Việt Nam</h1>
+                <p>Gốc vững, thân chắc, cành uyển chuyển</p>
+            </div>
+            <ul class="nav-menu">
+                <li><button id="btn-gioi-thieu" class="active" onclick="showSection('gioi-thieu')">Giới thiệu</button></li>
+                <li><button id="btn-giai-doan-1" onclick="showSection('giai-doan-1')">Giai đoạn 1</button></li>
+                <li><button id="btn-giai-doan-2" onclick="showSection('giai-doan-2')">Giai đoạn 2</button></li>
+                <li><button id="btn-giai-doan-3" onclick="showSection('giai-doan-3')">Giai đoạn 3</button></li>
+                <li><button id="btn-giai-doan-4" onclick="showSection('giai-doan-4')">Giai đoạn 4</button></li>
+                <li><button id="btn-video" onclick="showSection('video')">🎥 Video</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h2>Ngoại giao Cây tre Việt Nam</h2>
+                <p>Từ di sản Hồ Chí Minh đến bản lĩnh thời đại - Hành trình ngoại giao mang đậm bản sắc dân tộc</p>
+                <button class="hero-btn" onclick="showSection('gioi-thieu')">Tìm hiểu ngay</button>
+            </div>
+            <div class="hero-image">
+                <div style="background: rgba(201, 164, 76, 0.2); padding: 60px; border-radius: 15px;">
+                    <h3 style="color: #F3ECDC; font-size: 3em; margin-bottom: 20px;">🎋</h3>
+                    <p style="color: #F3ECDC; font-size: 1.4em; font-weight: 600;">Cây tre Việt Nam</p>
+                    <p style="color: #F3ECDC; opacity: 0.8; margin-top: 10px;">Gốc vững - Thân chắc - Cành uyển chuyển</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="content-wrapper">
+        
+        <div id="video" class="tab-content">
+            <div class="video-section">
+                <h2>🎥 Video Bài Giảng</h2>
+                <video controls>
+                    <source src="video.mp4" type="video/mp4">
+                    <source src="video.webm" type="video/webm">
+                    Trình duyệt của bạn không hỗ trợ phát video.
+                </video>
+                <p style="text-align: center; color: #666; margin-top: 20px;">
+                    <em>Xem video để hiểu rõ hơn về Ngoại giao Cây tre Việt Nam</em>
+                </p>
+            </div>
+        </div>
+
+        <div id="gioi-thieu" class="tab-content active">
+            <div class="section-title">
+                <h2>🎋 Bối cảnh ra đời Ngoại giao Cây tre Việt Nam</h2>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <blockquote>
+                        <strong>Ngày ra đời:</strong> 14/12/2021 tại Hội nghị Đối ngoại toàn quốc
+                        <br><br>
+                        <strong>Người đề xướng:</strong> Tổng Bí thư Nguyễn Phú Trọng
+                        <br><br>
+                        <strong>Mục tiêu:</strong> "Xây dựng trường phái ngoại giao <span class="highlight">'Cây tre Việt Nam': Gốc vững, thân chắc, cành uyển chuyển</span>, thấm đượm tâm hồn, cốt cách và khí phách của dân tộc Việt Nam."
+                    </blockquote>
+                </div>
+
+                <div class="content-card">
+                    <h3>Ý nghĩa hình tượng Cây tre</h3>
+                    
+                    <h4>🎋 Gốc vững</h4>
+                    <ul>
+                        <li>Độc lập dân tộc</li>
+                        <li>Chủ quyền quốc gia</li>
+                        <li>Thống nhất và toàn vẹn lãnh thổ</li>
+                    </ul>
+
+                    <h4>🎋 Thân chắc</h4>
+                    <ul>
+                        <li>Phối hợp quân sự, chính trị, ngoại giao</li>
+                        <li>Đoàn kết toàn dân</li>
+                        <li>Nội lực vững mạnh</li>
+                    </ul>
+
+                    <h4>🎋 Cành uyển chuyển</h4>
+                    <ul>
+                        <li>Mềm dẻo, khôn khéo</li>
+                        <li>Nhân nhượng có nguyên tắc</li>
+                        <li>Kiên quyết khi cần thiết</li>
+                    </ul>
+
+                    <blockquote>
+                        "Cứng quá thì gãy. Mềm dẻo, khôn khéo để đạt mục đích lớn nhất" - Hồ Chí Minh
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+
+        <div id="giai-doan-1" class="tab-content">
+            <div class="section-title">
+                <h2>📅 Giai đoạn 1 (1945-1954): Gieo mầm "Gốc tre"</h2>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>Triết lý: "Dĩ bất biến, ứng vạn biến"</h3>
+                    <ul>
+                        <li><strong>Bất biến:</strong> Độc lập, Chủ quyền, Thống nhất</li>
+                        <li><strong>Vạn biến:</strong> Sách lược linh hoạt</li>
+                    </ul>
+
+                    <h3>Thực tiễn 1945-1946</h3>
+                    <h4>🇨🇳 Với quân Tưởng</h4>
+                    <ul>
+                        <li>Nhường 70 ghế Quốc hội</li>
+                        <li>Cung cấp gạo, thực phẩm</li>
+                        <li>Mục đích: Tránh đụng độ</li>
+                    </ul>
+
+                    <h4>🇫🇷 Với Pháp (6/3/1946)</h4>
+                    <ul>
+                        <li>Hòa với Pháp để đuổi Tưởng</li>
+                        <li>Tống khứ 20 vạn quân Tưởng</li>
+                    </ul>
+
+                    <blockquote>
+                        "Hồ Chí Minh không bao giờ bán nước" - Hồ Chí Minh
+                    </blockquote>
+
+                    <h3>Chiến thắng Điện Biên Phủ (1954)</h3>
+                    <p><span class="highlight">"Thực lực là cái chiêng, ngoại giao là cái tiếng"</span></p>
+                    <ul>
+                        <li>Thắng trên chiến trường</li>
+                        <li>Thắng tại Hội nghị Genève</li>
+                        <li>Được quốc tế công nhận</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="giai-doan-2" class="tab-content">
+            <div class="section-title">
+                <h2>📅 Giai đoạn 2 (1954-1975): "Thân tre" vững chắc</h2>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>"Kiềng ba chân": Quân sự - Chính trị - Ngoại giao</h3>
+                    <ul>
+                        <li>Thắng trên chiến trường → Thắng trên bàn đàm phán</li>
+                        <li>Mục tiêu: "Đánh cho Mỹ cút"</li>
+                    </ul>
+
+                    <h3>Ngoại giao tâm công</h3>
+                    <ul>
+                        <li>Bà Nguyễn Thị Bình tại Paris</li>
+                        <li>Phong trào phản chiến ở Mỹ</li>
+                        <li>Biến hậu phương địch thành đồng minh</li>
+                    </ul>
+
+                    <h3>Mậu Thân 1968</h3>
+                    <ul>
+                        <li><span class="highlight">"Cú đánh sập ý chí"</span></li>
+                        <li>Mỹ ngừng ném bom miền Bắc</li>
+                        <li>Chấp nhận đàm phán Paris</li>
+                    </ul>
+
+                    <h3>"Điện Biên Phủ trên không" 1972</h3>
+                    <ul>
+                        <li>81 máy bay Mỹ bị bắn rơi</li>
+                        <li>Mỹ quay lại đàm phán</li>
+                    </ul>
+
+                    <h3>Hiệp định Paris 27/1/1973</h3>
+                    <ul>
+                        <li>Mỹ rút quân khỏi miền Nam</li>
+                        <li>Quân ta vẫn ở lại</li>
+                        <li>Mở đường cho Đại thắng 1975</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="giai-doan-3" class="tab-content">
+            <div class="section-title">
+                <h2>📅 Giai đoạn 3 (1986-2015): Phá vòng vây, hội nhập</h2>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>"Thêm bạn bớt thù" - Đa phương hóa</h3>
+                    <ul>
+                        <li>Chuyển từ đối đầu sang đối thoại</li>
+                        <li>Làm bạn với mọi nước dân chủ</li>
+                    </ul>
+
+                    <h3>Năm 1995 - "Cú hích tam giác"</h3>
+                    <h4>🇺🇸 Bình thường hóa với Mỹ (11/7/1995)</h4>
+                    <ul>
+                        <li>"Gác lại quá khứ, hướng tới tương lai"</li>
+                        <li>Mở cửa thị trường phương Tây</li>
+                    </ul>
+
+                    <h4>🌏 Gia nhập ASEAN (28/7/1995)</h4>
+                    <ul>
+                        <li>Từ đối trọng thành thành viên</li>
+                        <li>Tạo khiên an ninh tập thể</li>
+                    </ul>
+
+                    <h4>🇪🇺 Hiệp định khung với EU</h4>
+                    <ul>
+                        <li>Đa dạng hóa đối tác</li>
+                    </ul>
+
+                    <h3>Hội nhập kinh tế</h3>
+                    <h4>🌐 Gia nhập WTO (2007)</h4>
+                    <ul>
+                        <li>11 năm đàm phán</li>
+                        <li>Thành viên thứ 150</li>
+                    </ul>
+
+                    <h4>📋 Kỷ nguyên FTA</h4>
+                    <ul>
+                        <li>Ký kết nhiều FTA thế hệ mới</li>
+                        <li>Trở thành mắt xích chuỗi cung ứng toàn cầu</li>
+                    </ul>
+
+                    <h3>Kết quả</h3>
+                    <ul>
+                        <li>Quan hệ với 193 quốc gia</li>
+                        <li>Từ cô lập → Đối tác tin cậy</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="giai-doan-4" class="tab-content">
+            <div class="section-title">
+                <h2>📅 Giai đoạn 4 (2016-nay): Khẳng định bản sắc</h2>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>"Cân bằng chiến lược"</h3>
+                    <ul>
+                        <li>Không chọn phe, chọn lợi ích quốc gia</li>
+                        <li>Chính sách "Bốn không"</li>
+                        <li>Tạo mạng lưới lợi ích đan xen</li>
+                    </ul>
+
+                    <h3>"Cú nước rút" lịch sử 2023-2024</h3>
+                    
+                    <h4>🇺🇸 Với Hoa Kỳ (9/2023)</h4>
+                    <ul>
+                        <li>Nâng lên <span class="highlight">Đối tác Chiến lược Toàn diện</span></li>
+                        <li>Bỏ qua giai đoạn Đối tác Chiến lược</li>
+                        <li>Hợp tác công nghệ, bán dẫn</li>
+                    </ul>
+
+                    <h4>🇨🇳 Với Trung Quốc (12/2023)</h4>
+                    <ul>
+                        <li>Xây dựng "Cộng đồng chia sẻ tương lai"</li>
+                        <li>Khẳng định tình hữu nghị láng giềng</li>
+                    </ul>
+
+                    <h4>🌍 Với các nước khác</h4>
+                    <ul>
+                        <li>Nâng cấp với Nhật Bản, Úc</li>
+                        <li>Quan hệ cao nhất với 5 nước thường trực HĐBA LHQ</li>
+                    </ul>
+
+                    <h3>Thành tựu</h3>
+                    <ul>
+                        <li><strong>Duy nhất:</strong> Có Đối tác Chiến lược Toàn diện với cả Mỹ và Trung</li>
+                        <li>Từ "nhận viện trợ" → "Kiến tạo hòa bình"</li>
+                        <li>Ngoại giao vắc-xin COVID-19</li>
+                        <li>Trúng cử các cơ quan LHQ</li>
+                    </ul>
+
+                    <blockquote style="background: #C9A44C; color: #1E1E1E;">
+                        <strong>KẾT LUẬN:</strong> Ngoại giao Cây tre Việt Nam đã chứng minh sức sống mãnh liệt qua 4 giai đoạn lịch sử. Từ "Gốc vững" của Hồ Chí Minh, qua "Thân chắc" trong kháng chiến, đến "Cành uyển chuyển" trong hội nhập, Việt Nam đã xây dựng được một trường phái ngoại giao độc đáo, mang đậm bản sắc dân tộc và thích ứng với thời đại.
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 - HCM202: Ngoại giao Cây tre Việt Nam</p>
+        <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">Gốc vững - Thân chắc - Cành uyển chuyển</p>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.tab-content');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            const buttons = document.querySelectorAll('.nav-menu button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            document.getElementById(sectionId).classList.add('active');
+            document.getElementById('btn-' + sectionId).classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
